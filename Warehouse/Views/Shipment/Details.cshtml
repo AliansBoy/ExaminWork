@@ -1,0 +1,42 @@
+﻿@model Warehouse.Models.Customer.ShipmentViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ShipmentViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

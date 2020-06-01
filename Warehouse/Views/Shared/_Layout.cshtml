@@ -1,0 +1,37 @@
+﻿@using System.Web.Optimization
+@using Bundle = Warehouse.BundleConfig
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Warehouse</title>
+    @Styles.Render(Bundle.StylesPath)
+    @Scripts.Render(Bundle.JqueryPath)
+</head>
+<body>
+    <div class="app-bar navy">
+        @{Html.RenderPartial("Partials/_AppBar");}
+    </div>
+    <div class="container">
+        @if (ViewBag.PageTitle != null)
+        {
+            <div class="fb-hader">@ViewBag.PageTitle</div>
+        }
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+    <div class="animation-block" style="display: none;">
+        <svg width="40" height="40" viewbox="0 0 40 40">
+            <!-- <rect width="40" height="40" class="rect" />  <- this looks buggy in retina safari -->
+            <polygon points="0 0 0 40 40 40 40 0" class="rect" />
+        </svg>
+    </div>
+    @Scripts.Render(Bundle.ScriptsPath)
+    @RenderSection("scripts", false)
+    @{Html.RenderPartial("Partials/_Flash");}
+</body>
+</html>

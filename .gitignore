@@ -1,0 +1,9 @@
+/packages
+/Common/obj
+/Common/bin
+/Warehouse/obj
+/Warehouse/bin
+/WarehouseBL/obj
+/WarehouseBL/bin
+/WarehouseDAL/obj
+/WarehouseDAL/bin

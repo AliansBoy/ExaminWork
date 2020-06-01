@@ -1,0 +1,65 @@
+﻿@using Warehouse.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_Empty.cshtml";
+}
+<div class="login-form">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("ReturnUrl", (string)ViewBag.ReturnUrl)
+    <h1 class="align-center">Use a local account to log in</h1>
+        <hr />
+        @Html.ValidationSummary()
+        <div class="input-control modern text iconic full-size" data-role="input">
+            @Html.EditorFor(model => model.Login)
+            <span class="label">@Html.DisplayNameFor(model => model.Login)</span>
+            <span class="informer">Enter Login</span>
+            <span class="placeholder">@Html.DisplayNameFor(model => model.Login)</span>
+            <span class="icon mif-user"></span>
+        </div>
+        <div class="input-control modern password iconic full-size" data-role="input">
+            @Html.EditorFor(model => model.Password)
+            <span class="label">@Html.LabelFor(model => model.Password)</span>
+            <span class="informer">Enter Password</span>
+            <span class="placeholder">@Html.LabelFor(model => model.Password)</span>
+            <span class="icon mif-lock"></span>
+            <button class="button helper-button reveal"><span class="mif-looks"></span></button>
+        </div>
+        <div class="margin-top10">
+            @Html.LabelFor(model => model.RememberMe)
+            <label class="switch margin5">
+                @Html.EditorFor(model => model.RememberMe)
+                <span class="check"></span>
+            </label>
+        </div>
+        <div class="margin-top10">
+            <a class="button" href="@Url.Action("Register")">
+                <span class="mif-user-plus"></span> Register
+            </a>
+            <a class="button" href="@Url.Action("Index", "Home")">
+                <span class="mif-home"></span> Main Page
+            </a>
+            <button type="submit" class="button success pull-right block-shadow">
+                <span class="mif-enter"></span> Enter
+            </button>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            var form = $(".login-form form");
+
+            form.css({
+                opacity: 1,
+                "-webkit-transform": "scale(1)",
+                "transform": "scale(1)",
+                "-webkit-transition": ".5s",
+                "transition": ".5s"
+            });
+        });
+    </script>
+}

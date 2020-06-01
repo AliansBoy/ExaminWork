@@ -1,0 +1,81 @@
+﻿@model Warehouse.Models.Provider.ProviderRegisterModel
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+    <div class="grid">
+        <div class="row cells12">
+            @Html.LabelFor(model => model.Email, new { @class = "cell colspan2 label-control" })
+            <div class="input-control text cell colspan10">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            @Html.LabelFor(model => model.UserName, new { @class = "cell colspan2 label-control" })
+            <div class="input-control text  cell colspan10">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            @Html.LabelFor(model => model.Password, new { @class = "cell colspan2 label-control" })
+            <div class="input-control password cell colspan10" data-role="input">
+                @Html.EditorFor(model => model.Password)
+                <button class="button helper-button reveal" type="button"><span class="mif-looks"></span></button>
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "cell colspan2 label-control" })
+            <div class="input-control password cell colspan10" data-role="input">
+                @Html.EditorFor(model => model.ConfirmPassword)
+                <button class="button helper-button reveal" type="button"><span class="mif-looks"></span></button>
+                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            @Html.LabelFor(model => model.OrganizationName, new { @class = "cell colspan2 label-control" })
+            <div class="input-control password cell colspan10" data-role="input">
+                @Html.EditorFor(model => model.OrganizationName)
+                <button class="button helper-button reveal" type="button"><span class="mif-looks"></span></button>
+                @Html.ValidationMessageFor(model => model.OrganizationName)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            @Html.LabelFor(model => model.Address, new { @class = "cell colspan2 label-control" })
+            <div class="input-control password cell colspan10" data-role="input">
+                @Html.EditorFor(model => model.Address)
+                <button class="button helper-button reveal" type="button"><span class="mif-looks"></span></button>
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            @Html.LabelFor(model => model.ResponsiblePerson, new { @class = "cell colspan2 label-control" })
+            <div class="input-control password cell colspan10" data-role="input">
+                @Html.EditorFor(model => model.ResponsiblePerson)
+                <button class="button helper-button reveal" type="button"><span class="mif-looks"></span></button>
+                @Html.ValidationMessageFor(model => model.ResponsiblePerson)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            @Html.LabelFor(model => model.Position, new { @class = "cell colspan2 label-control" })
+            <div class="input-control password cell colspan10" data-role="input">
+                @Html.EditorFor(model => model.Position)
+                <button class="button helper-button reveal" type="button"><span class="mif-looks"></span></button>
+                @Html.ValidationMessageFor(model => model.Position)
+            </div>
+        </div>
+
+        <div class="row cells12">
+            <div class="offset2 cell colspan12">
+                <input type="submit" value="Register" class="button primary" />
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "button" })
+            </div>
+        </div>
+    </div>

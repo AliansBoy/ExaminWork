@@ -1,0 +1,60 @@
+﻿@using Helpers = Common.Enums.UserRoles
+@using Microsoft.AspNet.Identity
+<div class="container">
+    <a class="app-bar-element branding" href="@Url.Action("Index", "Home")"><span class="mif-bus"></span> Warehouse</a>
+    <span class="app-bar-divider"></span>
+    <ul class="app-bar-menu">
+        @if (User.IsInRole(Helpers.Admin))
+        {
+            <li>@Html.ActionLink("Employee", "Index", "User")</li>
+            <li>
+                <a href="" class="dropdown-toggle">Employees</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li>@Html.ActionLink("Add New Employee", "EmployeeRegister", "Account")</li>
+                    <li>@Html.ActionLink("Employee Info", "Index", "Employee")</li>
+                </ul>
+            </li>
+            <li>
+                <a href="" class="dropdown-toggle">Providers</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li>@Html.ActionLink("Add New Provider", "ProviderRegister", "Account")</li>
+                    <li>@Html.ActionLink("Provider Info", "Index", "Provider")</li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(Helpers.Employee))
+        {
+            <li>@Html.ActionLink("Deliveries", "Delivery", "Provider")</li>
+            <li>@Html.ActionLink("Shipments", "Shipment", "Customer")</li>
+            <li>@Html.ActionLink("Customers", "Customer Info", "Employee")</li>
+        }
+        else if (User.IsInRole(Helpers.Customer))
+        {
+            <li>@Html.ActionLink("Order shipment", "Shipment", "Customer")</li>
+        }
+
+
+    </ul>
+    <ul class="app-bar-menu place-right">
+        @if (Request.IsAuthenticated)
+        {
+            <li>
+                <a href="" class="dropdown-toggle">
+                    @User.Identity.GetUserName() <span class="mif-user"></span>
+                </a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li>@Html.ActionLink("Personal Account", "Index", "Account")</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Account management", "Index", "Manage")</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Exit", "LogOff", "Account")</li>
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        }
+    </ul>
+</div>
