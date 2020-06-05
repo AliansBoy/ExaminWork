@@ -6,21 +6,22 @@
     <ul class="app-bar-menu">
         @if (User.IsInRole(Helpers.Admin))
         {
-            <li>@Html.ActionLink("Employee", "Index", "User")</li>
             <li>
                 <a href="" class="dropdown-toggle">Employees</a>
                 <ul class="d-menu" data-role="dropdown">
                     <li>@Html.ActionLink("Add New Employee", "EmployeeRegister", "Account")</li>
-                    <li>@Html.ActionLink("Employee Info", "Index", "Employee")</li>
+                    <li>@Html.ActionLink("Employee Info", "Index", "Home")</li>
+
                 </ul>
             </li>
             <li>
                 <a href="" class="dropdown-toggle">Providers</a>
                 <ul class="d-menu" data-role="dropdown">
                     <li>@Html.ActionLink("Add New Provider", "ProviderRegister", "Account")</li>
-                    <li>@Html.ActionLink("Provider Info", "Index", "Provider")</li>
+                    <li>@Html.ActionLink("Provider Info", "Index", "Home")</li>
                 </ul>
             </li>
+
         }
         @if (User.IsInRole(Helpers.Employee))
         {
@@ -28,9 +29,30 @@
             <li>@Html.ActionLink("Shipments", "Shipment", "Customer")</li>
             <li>@Html.ActionLink("Customers", "Customer Info", "Employee")</li>
         }
-        else if (User.IsInRole(Helpers.Customer))
+        @if (User.IsInRole(Helpers.Provider))
         {
-            <li>@Html.ActionLink("Order shipment", "Shipment", "Customer")</li>
+                <li>@Html.ActionLink("Add New Product", "Create", "Product")</li>
+                <li>
+                    @Html.RouteLink("New Delivery", new
+                    {
+                        controller = "Product",
+                        action = "List",
+                        categoryId = 0,
+                        page = 1
+                    })
+                </li>
+        }
+        @if (User.IsInRole(Helpers.Customer))
+        {
+            <li>
+                @Html.RouteLink("Shipment", new
+                {
+                    controller = "Product",
+                    action = "List",
+                    categoryId = 0,
+                    page = 1
+                })
+            </li>
         }
 
 
@@ -38,12 +60,26 @@
     <ul class="app-bar-menu place-right">
         @if (Request.IsAuthenticated)
         {
+            <content>
+                @{Html.RenderAction("Summary", "Cart");}
+            </content>
             <li>
                 <a href="" class="dropdown-toggle">
                     @User.Identity.GetUserName() <span class="mif-user"></span>
                 </a>
                 <ul class="d-menu" data-role="dropdown">
-                    <li>@Html.ActionLink("Personal Account", "Index", "Account")</li>
+                    @if (User.IsInRole(Helpers.Customer))
+                    {
+                        <li>@Html.ActionLink("Personal account", "Details", "Customer")</li>
+                    }
+                    @if (User.IsInRole(Helpers.Employee))
+                    {
+                        <li>@Html.ActionLink("Personal account", "Details", "Employee")</li>
+                    }
+                    @if (User.IsInRole(Helpers.Provider))
+                    {
+                        <li>@Html.ActionLink("Personal account", "Details", "Provider")</li>
+                    }
                     <li class="divider"></li>
                     <li>@Html.ActionLink("Account management", "Index", "Manage")</li>
                     <li class="divider"></li>

@@ -10,6 +10,10 @@ namespace WarehouseDAL
 {
     public class WarehouseDbContext : DbContext
     {
+        static WarehouseDbContext()
+        {
+            Database.SetInitializer<WarehouseDbContext>(new WarehouseDbInitializer());
+        }
         public WarehouseDbContext() : base(nameof(WarehouseDbContext)) { }
 
         public static WarehouseDbContext Create()

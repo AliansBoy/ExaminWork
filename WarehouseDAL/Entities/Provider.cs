@@ -12,8 +12,7 @@ namespace WarehouseDAL.Entities
     {
         #region Scalar Prooerties
         [Key]
-        public int Id { get; set; }
-        public string UserId { get; set; }
+        public string Id { get; set; }
         public string OrganizationName { get; set; }
         public string Address { get; set; }
         public string ResponsiblePerson { get; set; }

@@ -1,57 +1,58 @@
-﻿@model IEnumerable<Warehouse.Models.Provider.ProviderViewModel>
+﻿@model Warehouse.Models.Provider.ProviderViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "User Details";
 }
 
-<h2>Index</h2>
+<h2>Details</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
+<div>
+    <h4>ProviderViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.OrganizationName)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ContactPerson)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResponsiblePerson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResponsiblePerson)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Position)
-        </th>
-        <th></th>
-    </tr>
+        </dt>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrganizationName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContactPerson)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Position)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+        <dd>
+            @Html.DisplayFor(model => model.Position)
+        </dd>
 
-</table>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to Main", "Index", "Home")
+</p>

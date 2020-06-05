@@ -9,5 +9,7 @@ namespace WarehouseBL.Interfaces
 {
     public interface IProductService : IGenericService<ProductBL>
     {
+        IEnumerable<ProductBL> AllIncluding();
+        IEnumerable<ProductBL> Where(int category, int page, int pageSize);
     }
 }

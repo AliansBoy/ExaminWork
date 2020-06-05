@@ -10,8 +10,8 @@ namespace Warehouse.Models.Customer
     public class ShipmentViewModel
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
-        public int EmployeeId { get; set; }
+        public string CustomerId { get; set; }
+        public string EmployeeId { get; set; }
         public DateTime? DeliveryDate { get; set; }
 
         public CustomerViewModel Customer { get; set; }

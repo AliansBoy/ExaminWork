@@ -10,9 +10,13 @@ using System.Web.Mvc;
 using Warehouse.Models.Provider;
 using WarehouseBL.Interfaces;
 using WarehouseBL.Models.Provider;
+using Microsoft.AspNet.Identity;
+using Common.Enums;
 
 namespace Warehouse.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = UserRoles.Provider)]
     public class ProviderController : Controller
     {
         private readonly IProviderService _service;
@@ -23,26 +27,30 @@ namespace Warehouse.Controllers
             _service = service;
             _mapper = mapper;
         }
-        //        // GET: Provider
-        //        public ActionResult Index()
-        //        {
-        //            return View(db.ProviderViewModels.ToList());
-        //        }
+        // GET: Provider
+        public ActionResult Details()
+        {
+            var userIdentity = User.Identity.GetUserId();
+            var providerBL = _service.GetById(userIdentity);
+            var provider = _mapper.Map<ProviderViewModel>(providerBL);
 
-        //        // GET: Provider/Details/5
-        //        public ActionResult Details(int? id)
-        //        {
-        //            if (id == null)
-        //            {
-        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //            }
-        //            ProviderViewModel providerViewModel = db.ProviderViewModels.Find(id);
-        //            if (providerViewModel == null)
-        //            {
-        //                return HttpNotFound();
-        //            }
-        //            return View(providerViewModel);
-        //        }
+            return View(provider);
+        }
+
+        //// GET: Provider/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ProviderViewModel providerViewModel = db.ProviderViewModels.Find(id);
+        //    if (providerViewModel == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(providerViewModel);
+        //}
 
         // GET: Provider/Create
         public ActionResult Create()

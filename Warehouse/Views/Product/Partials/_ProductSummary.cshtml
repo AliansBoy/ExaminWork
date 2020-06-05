@@ -1,0 +1,19 @@
+﻿@model Warehouse.Models.Products.ProductViewModel
+
+<div class="item">
+    @if (Model.Image != null)
+    {
+        <div style="float:left;margin-right:20px">
+            <image src="@Url.Content(@Model.Image)" class="img-responsive" alt="smaple image" height="75" width="75" />
+        </div>
+    }
+    <h3>@Model.Manufacturer</h3>
+    @Model.Title
+    @using (Html.BeginForm("AddToCart", "Cart"))
+    {
+        @Html.HiddenFor(x => x.Id)
+        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        <input type="submit" value="+ Add To Cart" />
+    }
+    <h4>@Model.Price.ToString("c")</h4>
+</div>

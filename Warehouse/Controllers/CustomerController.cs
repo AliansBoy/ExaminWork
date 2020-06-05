@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,6 +14,7 @@ using WarehouseBL.Models.Customer;
 
 namespace Warehouse.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private readonly ICustomerService _service;
@@ -25,9 +27,12 @@ namespace Warehouse.Controllers
         }
 
         //GET: Customer
-        public ActionResult Index()
+        public ActionResult Details()
         {
-            var customer = _service.GetAll().ToList();
+            var userIdentity = User.Identity.GetUserId();
+            var customerBL = _service.GetById(userIdentity);
+            var customer = _mapper.Map<CustomerViewModel>(customerBL);
+
             return View(customer);
         }
 
@@ -47,6 +52,7 @@ namespace Warehouse.Controllers
         //}
 
         // GET: Customer/Create
+        [AllowAnonymous]
         public ActionResult Create()
         {
             var model = TempData["NewCustomer"];

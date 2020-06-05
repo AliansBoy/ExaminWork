@@ -7,13 +7,13 @@ namespace WarehouseDAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class CorrectModels : IMigrationMetadata
+    public sealed partial class StringIdUser : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CorrectModels));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(StringIdUser));
         
         string IMigrationMetadata.Id
         {
-            get { return "202006012119405_CorrectModels"; }
+            get { return "202006031428122_StringIdUser"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,0 +1,21 @@
+﻿@model Warehouse.Models.Products.ProductListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<link href="~/Content/Site.css" type="text/css" rel="stylesheet" />
+
+
+<div id="categories">
+    @{ Html.RenderAction("Menu", "Nav"); }
+</div>
+
+@foreach (var p in Model.Products)
+{
+    Html.RenderPartial("Partials/_ProductSummary", p);
+}
+
+<div class="pager">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, categoryId = Model.CurrentCateogry }))
+</div>

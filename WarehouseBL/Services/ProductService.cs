@@ -13,10 +13,12 @@ namespace WarehouseBL.Services
 {
     public class ProductService : GenericService<ProductBL, Product>, IProductService
     {
+        private IGenericRepository<Product> _repository;
         private IMapper _mapper;
         public ProductService(IGenericRepository<Product> repository, IMapper mapper) : base(repository)
         {
             _mapper = mapper;
+            _repository = repository;
         }
         public override ProductBL Map(Product entity)
         {
@@ -36,6 +38,22 @@ namespace WarehouseBL.Services
         public override IEnumerable<Product> Map(IList<ProductBL> models)
         {
             return _mapper.Map<IEnumerable<Product>>(models);
+        }
+
+        public IEnumerable<ProductBL> AllIncluding()
+        {
+            var products = _repository.AllIncluding(p => p.ProductGroup, p => p.Country).ToList();
+            return Map(products);
+        }
+
+        public IEnumerable<ProductBL> Where(int category,int page, int pageSize)
+        {
+            var products = _repository.GetAll();
+            var productsSort = products.Where(p => category == 0 || p.ProductGroup.Id == category)
+                                                .OrderBy(p => p.Id)
+                                                .Skip((page - 1) * pageSize)
+                                                .Take(pageSize).ToList();
+            return Map(productsSort);
         }
     }
 }

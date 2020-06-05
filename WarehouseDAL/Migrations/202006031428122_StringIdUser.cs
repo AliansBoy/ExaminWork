@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class StringIdUser : DbMigration
     {
         public override void Up()
         {
@@ -23,6 +23,7 @@
                         Id = c.Int(nullable: false, identity: true),
                         Manufacturer = c.String(),
                         Title = c.String(),
+                        Image = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Amount = c.Int(nullable: false),
                         CountryId = c.Int(nullable: false),
@@ -54,13 +55,13 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ProviderId = c.Int(nullable: false),
-                        EmployeeId = c.Int(nullable: false),
+                        ProviderId = c.String(maxLength: 128),
+                        EmployeeId = c.String(maxLength: 128),
                         DeliveryDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
-                .ForeignKey("dbo.Providers", t => t.ProviderId, cascadeDelete: true)
+                .ForeignKey("dbo.Employees", t => t.EmployeeId)
+                .ForeignKey("dbo.Providers", t => t.ProviderId)
                 .Index(t => t.ProviderId)
                 .Index(t => t.EmployeeId);
             
@@ -68,11 +69,11 @@
                 "dbo.Employees",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(),
+                        Id = c.String(nullable: false, maxLength: 128),
+                        FirstName = c.String(),
+                        SecondName = c.String(),
                         DateBorn = c.DateTime(),
                         ContactPerson = c.String(),
-                        Position = c.String(),
                         Address = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
@@ -82,13 +83,13 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        CustomerId = c.Int(nullable: false),
-                        EmployeeId = c.Int(nullable: false),
+                        CustomerId = c.String(maxLength: 128),
+                        EmployeeId = c.String(maxLength: 128),
                         DeliveryDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
-                .ForeignKey("dbo.Employees", t => t.EmployeeId, cascadeDelete: true)
+                .ForeignKey("dbo.Customers", t => t.CustomerId)
+                .ForeignKey("dbo.Employees", t => t.EmployeeId)
                 .Index(t => t.CustomerId)
                 .Index(t => t.EmployeeId);
             
@@ -96,8 +97,7 @@
                 "dbo.Customers",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(),
+                        Id = c.String(nullable: false, maxLength: 128),
                         IsCanOrder = c.Boolean(nullable: false),
                         OrganizationName = c.String(),
                         Address = c.String(),
@@ -128,8 +128,7 @@
                 "dbo.Providers",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(),
+                        Id = c.String(nullable: false, maxLength: 128),
                         OrganizationName = c.String(),
                         Address = c.String(),
                         ResponsiblePerson = c.String(),

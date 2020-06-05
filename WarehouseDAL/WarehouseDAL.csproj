@@ -62,37 +62,38 @@
     <Compile Include="Entities\ProductShipment.cs" />
     <Compile Include="Entities\Provider.cs" />
     <Compile Include="Entities\Shipment.cs" />
-    <Compile Include="Migrations\202005301730019_InitialCreate.cs" />
-    <Compile Include="Migrations\202005301730019_InitialCreate.designer.cs">
-      <DependentUpon>202005301730019_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202006031428122_StringIdUser.cs" />
+    <Compile Include="Migrations\202006031428122_StringIdUser.designer.cs">
+      <DependentUpon>202006031428122_StringIdUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202005311735241_ChangeUsersId.cs" />
-    <Compile Include="Migrations\202005311735241_ChangeUsersId.designer.cs">
-      <DependentUpon>202005311735241_ChangeUsersId.cs</DependentUpon>
+    <Compile Include="Migrations\202006041331149_ChangeTypes.cs" />
+    <Compile Include="Migrations\202006041331149_ChangeTypes.designer.cs">
+      <DependentUpon>202006041331149_ChangeTypes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006012119405_CorrectModels.cs" />
-    <Compile Include="Migrations\202006012119405_CorrectModels.designer.cs">
-      <DependentUpon>202006012119405_CorrectModels.cs</DependentUpon>
+    <Compile Include="Migrations\202006042144340_NewChanges.cs" />
+    <Compile Include="Migrations\202006042144340_NewChanges.designer.cs">
+      <DependentUpon>202006042144340_NewChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="WarehouseDbContext.cs" />
+    <Compile Include="WarehouseDbInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005301730019_InitialCreate.resx">
-      <DependentUpon>202005301730019_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006031428122_StringIdUser.resx">
+      <DependentUpon>202006031428122_StringIdUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005311735241_ChangeUsersId.resx">
-      <DependentUpon>202005311735241_ChangeUsersId.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006041331149_ChangeTypes.resx">
+      <DependentUpon>202006041331149_ChangeTypes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006012119405_CorrectModels.resx">
-      <DependentUpon>202006012119405_CorrectModels.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006042144340_NewChanges.resx">
+      <DependentUpon>202006042144340_NewChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -17,21 +17,13 @@ namespace WarehouseDAL.Entities
         public int DeliveryId { get; set; }
         public int Amount { get; set; }
         public decimal UnitPrice { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal TottalPrice { get; set; }
+
         #endregion
 
         #region Navigation Properties
         public virtual Shipment Shipment { get; set; }
-        public virtual Product Product
-        {
-            get { return _product;}
-            set 
-            {
-                _product = value;
-                UnitPrice = value.Price;
-                TotalPrice = UnitPrice * Amount;
-            } 
-        }
+        public virtual Product Product { get; set; }
         #endregion
 
     }

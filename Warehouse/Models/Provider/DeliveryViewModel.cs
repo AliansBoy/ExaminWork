@@ -10,8 +10,8 @@ namespace Warehouse.Models.Provider
     public class DeliveryViewModel
     {
         public int Id { get; set; }
-        public int ProviderId { get; set; }
-        public int EmployeeId { get; set; }
+        public string ProviderId { get; set; }
+        public string EmployeeId { get; set; }
         public DateTime? DeliveryDate { get; set; }
 
         public ProviderViewModel Provider { get; set; }

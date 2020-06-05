@@ -14,6 +14,7 @@ namespace WarehouseBL.Models.Products
         public string Title { get; set; }
         public decimal Price { get; set; }
         public int Amount { get; set; }
+        public string Image { get; set; }
         public int CountryId { get; set; }
         public int ProductGroupId { get; set; }
 

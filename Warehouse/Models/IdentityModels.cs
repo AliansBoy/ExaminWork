@@ -31,7 +31,6 @@ namespace Warehouse.Models
             return new ApplicationDbContext();
         }
     }
-
     public class AppDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
@@ -69,3 +68,5 @@ namespace Warehouse.Models
         }
     }
 }
+
+

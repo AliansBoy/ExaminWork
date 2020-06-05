@@ -8,8 +8,7 @@ namespace WarehouseBL.Models.Provider
 {
     public class ProviderBL
     {
-        public int Id { get; set; }
-        public string UserId { get; set; }
+        public string Id { get; set; }
         public string OrganizationName { get; set; }
         public string Address { get; set; }
         public string ContactPerson { get; set; }

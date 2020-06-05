@@ -6,8 +6,8 @@ namespace WarehouseDAL.Entities
     public class Delivery : BaseEntity<int>
     {
         #region Scalar Prooerties
-        public int ProviderId { get; set; }
-        public int EmployeeId { get; set; }
+        public string ProviderId { get; set; }
+        public string EmployeeId { get; set; }
         public DateTime? DeliveryDate { get; set; }
         #endregion
 

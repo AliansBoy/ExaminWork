@@ -9,8 +9,8 @@ namespace WarehouseBL.Models.Provider
 {
     public class DeliveryBL : BaseModelBL
     {
-        public int ProviderId { get; set; }
-        public int EmployeeId { get; set; }
+        public string ProviderId { get; set; }
+        public string EmployeeId { get; set; }
         public DateTime? DeliveryDate { get; set; }
 
         public ProviderBL Provider { get; set; }

@@ -7,13 +7,13 @@ namespace WarehouseDAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class ChangeUsersId : IMigrationMetadata
+    public sealed partial class ChangeTypes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeUsersId));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeTypes));
         
         string IMigrationMetadata.Id
         {
-            get { return "202005311735241_ChangeUsersId"; }
+            get { return "202006041331149_ChangeTypes"; }
         }
         
         string IMigrationMetadata.Source

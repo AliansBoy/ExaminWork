@@ -9,5 +9,6 @@ namespace WarehouseBL.Interfaces
 {
     public interface IProductShipmentService : IGenericService<ProductShipmentBL>
     {
+
     }
 }

@@ -50,12 +50,6 @@ namespace WarehouseBL.Services
             return Map(listEntity);
         }
 
-        public IEnumerable<BLModel> AllIncluding()
-        {
-            var allIncludingList = _repository.AllIncluding().ToList();
-            return Map(allIncludingList);
-        }
-
         public BLModel GetById(object id)
         {
             var model = _repository.GetById(id);

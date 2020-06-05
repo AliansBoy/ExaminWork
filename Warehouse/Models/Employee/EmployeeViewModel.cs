@@ -10,8 +10,7 @@ namespace Warehouse.Models.Employee
 {
     public class EmployeeViewModel
     {
-        public int Id { get; set; }
-        public string UserId { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public DateTime? DateBorn { get; set; }

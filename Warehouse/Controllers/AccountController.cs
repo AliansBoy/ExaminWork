@@ -165,7 +165,7 @@ namespace Warehouse.Controllers
                     await UserManager.AddToRoleAsync(user.Id, UserRoles.Customer);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    model.UserId = user.Id;
+                    model.Id = user.Id;
                     model.IsCanOrder = true;
                     TempData["NewCustomer"] = model;
                     return RedirectToAction("Create", "Customer");
@@ -176,7 +176,7 @@ namespace Warehouse.Controllers
         }
 
         // GET: /Account/EmployeeRegister
-        [AllowAnonymous]
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult EmployeeRegister()
         {
             return View();
@@ -185,7 +185,7 @@ namespace Warehouse.Controllers
         
         // POST: /Account/EmployeeRegister
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = UserRoles.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EmployeeRegister(EmployeeRegisterModel model)
         {
@@ -198,7 +198,7 @@ namespace Warehouse.Controllers
                     await UserManager.AddToRoleAsync(user.Id, UserRoles.Employee);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    model.UserId = user.Id;
+                    model.Id = user.Id;
                     TempData["NewEmployee"] = model;
                     return RedirectToAction("Create", "Employee");
                 }
@@ -208,7 +208,7 @@ namespace Warehouse.Controllers
         }
 
         // GET: /Account/ProviderRegister
-        [AllowAnonymous]
+        [Authorize(Roles = UserRoles.Admin)]
         public ActionResult ProviderRegister()
         {
             return View();
@@ -217,7 +217,7 @@ namespace Warehouse.Controllers
         
         // POST: /Account/ProviderRegister
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = UserRoles.Admin)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ProviderRegister(ProviderRegisterModel model)
         {
@@ -230,7 +230,7 @@ namespace Warehouse.Controllers
                     await UserManager.AddToRoleAsync(user.Id, UserRoles.Provider);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    model.UserId = user.Id;
+                    model.Id = user.Id;
                     TempData["NewProvider"] = model;
                     return RedirectToAction("Create", "Provider");
                 }

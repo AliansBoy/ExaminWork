@@ -1,137 +1,187 @@
 ﻿//using System;
 //using System.Collections.Generic;
-//using System.Data;
-//using System.Data.Entity;
-//using System.Linq;
-//using System.Net;
-//using System.Web;
-//using System.Web.Mvc;
-//using Warehouse.Models.Products;
-//using WarehouseDAL;
+using AutoMapper;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.IO;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using Warehouse.Models.Products;
+using WarehouseBL.Interfaces;
+using WarehouseDAL;
+using System;
+using WarehouseBL.Models.Products;
+using Warehouse.HtmlHelpers;
+using PagedList;
 
-//namespace Warehouse.Controllers
-//{
-//    public class ProductController : Controller
-//    {
-//        private WarehouseDbContext db = new WarehouseDbContext();
+namespace Warehouse.Controllers
+{
+    public class ProductController : Controller
+    {
+        private readonly IProductService _productService;
+        private readonly ICountryService _countryService;
+        private readonly IProductGroupService _productGroupService;
+        private readonly IMapper _mapper;
+        public int PageSize = 4;
 
-//        // GET: Product
-//        public ActionResult Index()
-//        {
-//            var productViewModels = db.ProductViewModels.Include(p => p.Country).Include(p => p.ProductGroup);
-//            return View(productViewModels.ToList());
-//        }
+        public ProductController(IProductService service, ICountryService countryService,
+                                    IProductGroupService productGroupService, IMapper mapper)
+        {
+            _productService = service;
+            _countryService = countryService;
+            _productGroupService = productGroupService;
+            _mapper = mapper;
+        }
+        //// GET: Product
+        //public ActionResult Index(PagedListHelper filter)
+        //{
+        //    var productsBL = _productService.GetAll();
+        //    var products = _mapper.Map<IEnumerable<ProductViewModel>>(productsBL);
 
-//        // GET: Product/Details/5
-//        public ActionResult Details(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
-//            if (productViewModel == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(productViewModel);
-//        }
+        //    var resultAsPagedList = new StaticPagedList<ProductViewModel>(products, filter.Page, filter.PageSize, 5);
 
-//        // GET: Product/Create
-//        public ActionResult Create()
-//        {
-//            ViewBag.CountryId = new SelectList(db.CountryViewModels, "Id", "Name");
-//            ViewBag.ProductGroupId = new SelectList(db.ProductGroupViewModels, "Id", "Name");
-//            return View();
-//        }
+        //    return View(resultAsPagedList);
+        //}
 
-//        // POST: Product/Create
-//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-//        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult Create([Bind(Include = "Id,Manufacturer,Title,Price,Amount,CountryId,ProductGroupId")] ProductViewModel productViewModel)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                db.ProductViewModels.Add(productViewModel);
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
+        public ViewResult List(int categoryId = 0, int page = 1)
+        {
+            var productsBL = _productService.Where(categoryId, page, PageSize);
+            var products = _mapper.Map<IEnumerable<ProductViewModel>>(productsBL);
+            ProductListViewModel model = new ProductListViewModel
+            {
+                Products = products,
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = categoryId == 0 ?
+                                _productService.GetAll().Count() :
+                                _productService.GetAll().Count(e => e.ProductGroup.Id == categoryId)
+                },
+                CurrentCateogry = categoryId
+            };
+            return View(model);
+        }
 
-//            ViewBag.CountryId = new SelectList(db.CountryViewModels, "Id", "Name", productViewModel.CountryId);
-//            ViewBag.ProductGroupId = new SelectList(db.ProductGroupViewModels, "Id", "Name", productViewModel.ProductGroupId);
-//            return View(productViewModel);
-//        }
+        //        // GET: Product/Details/5
+        //        public ActionResult Details(int? id)
+        //        {
+        //            if (id == null)
+        //            {
+        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //            }
+        //            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
+        //            if (productViewModel == null)
+        //            {
+        //                return HttpNotFound();
+        //            }
+        //            return View(productViewModel);
+        //        }
 
-//        // GET: Product/Edit/5
-//        public ActionResult Edit(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
-//            if (productViewModel == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            ViewBag.CountryId = new SelectList(db.CountryViewModels, "Id", "Name", productViewModel.CountryId);
-//            ViewBag.ProductGroupId = new SelectList(db.ProductGroupViewModels, "Id", "Name", productViewModel.ProductGroupId);
-//            return View(productViewModel);
-//        }
+        // GET: Product/Create
+        public ActionResult Create()
+        {
+            var countryBL = _countryService.GetAll().ToList();
+            ViewBag.CountryId = new SelectList(countryBL.Select(x => new { x.Id, Name = $"{x.Name}" }), "Id", "Name");
 
-//        // POST: Product/Edit/5
-//        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-//        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult Edit([Bind(Include = "Id,Manufacturer,Title,Price,Amount,CountryId,ProductGroupId")] ProductViewModel productViewModel)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                db.Entry(productViewModel).State = EntityState.Modified;
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
-//            ViewBag.CountryId = new SelectList(db.CountryViewModels, "Id", "Name", productViewModel.CountryId);
-//            ViewBag.ProductGroupId = new SelectList(db.ProductGroupViewModels, "Id", "Name", productViewModel.ProductGroupId);
-//            return View(productViewModel);
-//        }
+            var groupBL = _productGroupService.GetAll().ToList();
+            ViewBag.ProductGroupId = new SelectList(groupBL.Select(x => new { x.Id, Name = $"{x.Name}" }), "Id", "Name");
+            return View();
+        }
 
-//        // GET: Product/Delete/5
-//        public ActionResult Delete(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
-//            if (productViewModel == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(productViewModel);
-//        }
+        // POST: Product/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ProductViewModel productModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(productModel.ImageFile.FileName);
+                var extension = Path.GetExtension(productModel.ImageFile.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                productModel.Image = "~/Image/" + fileName;
+                fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                productModel.ImageFile.SaveAs(fileName);
+                var model = _mapper.Map<ProductBL>(productModel);
+                _productService.Create(model);
+            }
+            ModelState.Clear();
+            return RedirectToAction("Index", "Home");
+        }
 
-//        // POST: Product/Delete/5
-//        [HttpPost, ActionName("Delete")]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult DeleteConfirmed(int id)
-//        {
-//            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
-//            db.ProductViewModels.Remove(productViewModel);
-//            db.SaveChanges();
-//            return RedirectToAction("Index");
-//        }
+        //        // GET: Product/Edit/5
+        //        public ActionResult Edit(int? id)
+        //        {
+        //            if (id == null)
+        //            {
+        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //            }
+        //            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
+        //            if (productViewModel == null)
+        //            {
+        //                return HttpNotFound();
+        //            }
+        //            ViewBag.CountryId = new SelectList(db.CountryViewModels, "Id", "Name", productViewModel.CountryId);
+        //            ViewBag.ProductGroupId = new SelectList(db.ProductGroupViewModels, "Id", "Name", productViewModel.ProductGroupId);
+        //            return View(productViewModel);
+        //        }
 
-//        protected override void Dispose(bool disposing)
-//        {
-//            if (disposing)
-//            {
-//                db.Dispose();
-//            }
-//            base.Dispose(disposing);
-//        }
-//    }
-//}
+        //        // POST: Product/Edit/5
+        //        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //        [HttpPost]
+        //        [ValidateAntiForgeryToken]
+        //        public ActionResult Edit([Bind(Include = "Id,Manufacturer,Title,Price,Amount,CountryId,ProductGroupId")] ProductViewModel productViewModel)
+        //        {
+        //            if (ModelState.IsValid)
+        //            {
+        //                db.Entry(productViewModel).State = EntityState.Modified;
+        //                db.SaveChanges();
+        //                return RedirectToAction("Index");
+        //            }
+        //            ViewBag.CountryId = new SelectList(db.CountryViewModels, "Id", "Name", productViewModel.CountryId);
+        //            ViewBag.ProductGroupId = new SelectList(db.ProductGroupViewModels, "Id", "Name", productViewModel.ProductGroupId);
+        //            return View(productViewModel);
+        //        }
+
+        //        // GET: Product/Delete/5
+        //        public ActionResult Delete(int? id)
+        //        {
+        //            if (id == null)
+        //            {
+        //                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //            }
+        //            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
+        //            if (productViewModel == null)
+        //            {
+        //                return HttpNotFound();
+        //            }
+        //            return View(productViewModel);
+        //        }
+
+        //        // POST: Product/Delete/5
+        //        [HttpPost, ActionName("Delete")]
+        //        [ValidateAntiForgeryToken]
+        //        public ActionResult DeleteConfirmed(int id)
+        //        {
+        //            ProductViewModel productViewModel = db.ProductViewModels.Find(id);
+        //            db.ProductViewModels.Remove(productViewModel);
+        //            db.SaveChanges();
+        //            return RedirectToAction("Index");
+        //        }
+
+        //        protected override void Dispose(bool disposing)
+        //        {
+        //            if (disposing)
+        //            {
+        //                db.Dispose();
+        //            }
+        //            base.Dispose(disposing);
+        //        }
+    }
+}

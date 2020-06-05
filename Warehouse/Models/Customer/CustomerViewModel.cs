@@ -8,8 +8,7 @@ namespace Warehouse.Models.Customer
 {
     public class CustomerViewModel
     {
-        public int Id { get; set; }
-        public string UserId { get; set; }
+        public string Id { get; set; }
         public bool IsCanOrder { get; set; }
         public string OrganizationName { get; set; }
         public string Address { get; set; }

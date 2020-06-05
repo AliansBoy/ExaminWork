@@ -1,0 +1,38 @@
+﻿@model Warehouse.Models.Products.ProductViewModel
+@using Helpers = Common.Enums.UserRoles
+@using Microsoft.AspNet.Identity
+<link href="~/Content/imageStyle.css" rel="stylesheet" />
+
+
+
+<div class="col-md-3 row justify-content-md-center">
+
+    <div height="300" width="200">
+        <div class="hovereffect">
+            <image src="@Url.Content(@Model.Image)" class="img-responsive" alt="smaple image" height="300" width="200" />
+
+            <div class="overlay">
+
+                <h2>@Model.Price UAH</h2>
+                <h2>@Model.Amount</h2>
+                <h2>@Model.Manufacturer  @Model.Title</h2>
+
+                @*@if (User.IsInRole(Helpers.Customer))
+                {*@
+                    @*<div>*@  
+                        @using (Html.BeginForm("AddToCart", "Cart"))
+                        {
+                            @Html.HiddenFor(x => x.Id)
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                            <input type="submit" value="+ Add To Cart" />
+                        }
+                    @*</div>
+                }*@
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

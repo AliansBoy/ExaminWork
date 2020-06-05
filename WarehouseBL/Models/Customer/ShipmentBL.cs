@@ -9,8 +9,8 @@ namespace WarehouseBL.Models.Customer
 {
     public class ShipmentBL : BaseModelBL
     {
-        public int CustomerId { get; set; }
-        public int EmployeeId { get; set; }
+        public string CustomerId { get; set; }
+        public string EmployeeId { get; set; }
         public DateTime? DeliveryDate { get; set; }
 
         public CustomerBL Customer { get; set; }

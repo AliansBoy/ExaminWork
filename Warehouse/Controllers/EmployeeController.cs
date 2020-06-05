@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Common.Enums;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,6 +15,8 @@ using WarehouseBL.Models.Employee;
 
 namespace Warehouse.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = UserRoles.Employee)]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _service;
@@ -23,11 +27,16 @@ namespace Warehouse.Controllers
             _service = service;
             _mapper = mapper;
         }
-        //        // GET: Employee
-        //        public ActionResult Index()
-        //        {
-        //            return View(db.EmployeeViewModels.ToList());
-        //        }
+
+        // GET: Employee
+        public ActionResult Details()
+        {
+            var userIdentity = User.Identity.GetUserId();
+            var employeeBL = _service.GetById(userIdentity);
+            var employee = _mapper.Map<EmployeeViewModel>(employeeBL);
+
+            return View(employee);
+        }
 
         //        // GET: Employee/Details/5
         //        public ActionResult Details(int? id)

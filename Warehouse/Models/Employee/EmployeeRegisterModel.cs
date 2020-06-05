@@ -11,7 +11,7 @@ namespace Warehouse.Models.Employee
 {
     public class EmployeeRegisterModel : RegisterViewModel
     {
-        public string UserId { get; set; }
+        public string Id { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 3)]
         [Display(Name = "First Name")]
@@ -29,8 +29,5 @@ namespace Warehouse.Models.Employee
         [StringLength(50, MinimumLength = 6)]
         [Display(Name = "Address")]
         public string Address { get; set; }
-
-        public IEnumerable<DeliveryViewModel> Deliveries { get; set; }
-        public IEnumerable<ShipmentViewModel> Shipments { get; set; }
     }
 }

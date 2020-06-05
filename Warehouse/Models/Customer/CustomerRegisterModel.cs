@@ -8,7 +8,7 @@ namespace Warehouse.Models.Customer
 {
     public class CustomerRegisterModel : RegisterViewModel
     {
-        public string UserId { get; set; }
+        public string Id{ get; set; }
         public bool IsCanOrder { get; set; }
         [Required]
         [StringLength(50)]
